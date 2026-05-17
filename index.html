@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Silent Heaven Color Tool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card">
+  <div class="card-header">
+    <h1>Silent Heaven Color Tool</h1>
+    <div class="history-controls">
+      <button type="button" id="undoBtn" title="Undo (Ctrl+Z)" disabled>↶ Undo</button>
+      <button type="button" id="redoBtn" title="Redo (Ctrl+Y)" disabled>Redo ↷</button>
+    </div>
+  </div>
+
+  <div class="mode-switch" role="tablist" aria-label="Painting mode">
+    <button type="button" class="mode-btn active" data-mode="color" aria-pressed="true">Solid Color</button>
+    <button type="button" class="mode-btn" data-mode="gradient" aria-pressed="false">Gradient</button>
+  </div>
+
+  <div class="palette-header">
+    <h3>Colors</h3>
+    <label class="toggle-switch" title="Show color names inline">
+      <input type="checkbox" id="toggleNames">
+      <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      <span class="toggle-text">Color Names</span>
+    </label>
+  </div>
+  <div id="paletteGrid"></div>
+
+  <div id="gradientPanel" hidden>
+    <h3>Gradient Builder</h3>
+
+    <p class="hint">CLICK - Add a color</p>
+    <p class="hint">SHIFT + CLICK - Remove last instance of a color</p>
+    <p class="hint">ALT + CLICK - Remove ALL instances of a color</p>
+
+    <div id="stops"></div>
+
+    <div class="controls controls-end">
+      <button id="clearStops">Clear Gradient</button>
+      <button type="button" id="applyGradient" class="btn-primary">Apply Gradient</button>
+    </div>
+
+    <div class="controls">
+      <label for="presetPicker">Preset:</label>
+      <select id="presetPicker"></select>
+    </div>
+
+    <div class="controls">
+      <label><input type="checkbox" id="mirror"> Mirror</label>
+      <label><input type="checkbox" id="reverse"> Reverse</label>
+      <label><input type="checkbox" id="randomize"> Randomize</label>
+    </div>
+
+    <div class="controls">
+      <label for="smoothnessInput">Smoothness:</label>
+      <input type="number" id="smoothnessInput" min="1" value="3">
+      <label><input type="checkbox" id="fixedSmoothness" checked> Fixed Smoothness Mode </label>
+    </div>
+    <p class="hint">When FSM is unchecked, builder will attempt to distrubte colors evenly based on # in Smoothness Box</p>
+
+    <div id="gradientPreview"></div>
+  </div>
+
+  <div id="editor" contenteditable="true" spellcheck="false"></div>
+
+  <div class="controls editor-actions">
+    <button id="clearAllColors">Clear Color</button>
+    <button id="clearText">Clear Text</button>
+  </div>
+
+  <div class="output">
+    <h3>Output</h3>
+    <textarea id="rawOutput"></textarea>
+    <div id="rawCounter">
+      <div id="rawCounterChars">Characters: 0</div>
+      <div id="rawCounterText">Text length: 0</div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
