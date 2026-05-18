@@ -1,3 +1,9 @@
+html {
+  /* Reserve scrollbar gutter so toggling gradient mode (which may add a
+     vertical scrollbar) doesn't shift the centered card horizontally. */
+  scrollbar-gutter: stable;
+}
+
 body {
   background: hsl(230deg, 5%, 5%);
   color: hsl(230deg, 5%, 80%);
@@ -773,13 +779,10 @@ label {
 
 
 .credits {
-  position: fixed;
-  bottom: 10px;
-  right: 16px;
+  text-align: center;
+  padding: 1rem 1.25rem;
   font-size: 0.8rem;
   color: hsl(230deg, 5%, 50%);
-  z-index: 10;
-  pointer-events: auto;
 }
 
 .credits a {
