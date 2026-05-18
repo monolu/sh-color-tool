@@ -418,7 +418,7 @@ const smoothnessInput = document.getElementById("smoothnessInput");
 const fixedSmoothnessBox = document.getElementById("fixedSmoothness");
 const presetPicker = document.getElementById("presetPicker");
 
-editor.setAttribute("data-placeholder", "Type something...");
+editor.setAttribute("data-placeholder", "Type something, select characters, and pick colors...");
 
 function renderEditor() {
   editor.innerHTML = "";
