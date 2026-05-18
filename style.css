@@ -8,7 +8,6 @@ body {
   background: hsl(230deg, 5%, 5%);
   color: hsl(230deg, 5%, 80%);
   font-family: Quicksand, sans-serif;
-  font-weight: 100;
   padding: 0;
   margin: 0;
   height: 100%;
@@ -21,7 +20,6 @@ body {
 
 h1, h2, h3, h4 {
   color: white;
-  font-weight: 100;
   margin-bottom: 0;
 }
 
@@ -85,7 +83,6 @@ h3 {
   padding: 8px 22px;
   border-radius: 6px;
   font-family: "Syne Mono", monospace;
-  font-weight: 100;
   font-size: 1rem;
   color: hsl(230deg, 5%, 65%);
   cursor: pointer;
@@ -183,7 +180,6 @@ h3 {
   top: -2px;
   right: -2px;
   font-family: "Syne Mono", monospace;
-  font-weight: 100;
   font-size: 9px;
   line-height: 1.2;
   color: #000;
@@ -338,7 +334,6 @@ button {
   border: 1px solid #3b3d3f;
   border-radius: 5px;
   font-family: "Syne Mono", monospace;
-  font-weight: 100;
   font-size: 1rem;
   cursor: pointer;
   transition: background .15s ease, color .15s ease, border-color .15s ease;
@@ -365,7 +360,6 @@ select {
   border: 0;
   border-radius: 5px;
   font-family: "Syne Mono", monospace;
-  font-weight: 100;
   font-size: 1rem;
   cursor: pointer;
   transition: background .15s ease;
@@ -393,7 +387,6 @@ select:focus {
   cursor: pointer;
   user-select: none;
   font-family: Quicksand, sans-serif;
-  font-weight: 100;
   font-size: 1rem;
   color: hsl(230deg, 5%, 75%);
 }
@@ -480,8 +473,6 @@ textarea {
   white-space: pre-wrap;
   word-break: break-word;
   font-family: Quicksand, sans-serif;
-  font-weight: 100;
-  font-size: 1rem;
   box-sizing: border-box;
 }
 
@@ -555,7 +546,6 @@ textarea:focus {
   font-size: .8rem;
   color: #000;
   font-family: "Syne Mono", monospace;
-  font-weight: 100;
   user-select: none;
 }
 
@@ -593,7 +583,6 @@ label[for="smoothnessInput"] {
   background: hsl(230deg, 5%, 18%);
   color: hsl(230deg, 5%, 90%);
   font-family: "Syne Mono", monospace;
-  font-weight: 100;
   font-size: 1rem;
   margin-right: -10px;
   transition: background .15s ease, color .15s ease, border-color .15s ease;
@@ -607,7 +596,6 @@ label[for="smoothnessInput"] {
   border: 1px solid #3b3d3f;
   border-radius: 0 5px 5px 0;
   font-family: "Syne Mono", monospace;
-  font-weight: 100;
   font-size: 1rem;
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
@@ -657,7 +645,6 @@ label:has(> input[type="checkbox"]):not(.toggle-switch) {
   cursor: pointer;
   user-select: none;
   font-family: "Syne Mono", monospace;
-  font-weight: 100;
   font-size: 1rem;
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
@@ -741,7 +728,6 @@ label {
 
 #flashHint {
   font-family: "Syne Mono", monospace !important;
-  font-weight: 100 !important;
 }
 
 ::-webkit-scrollbar {
