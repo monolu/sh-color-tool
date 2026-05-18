@@ -38,7 +38,7 @@ h3 {
 
 .hint {
   color: hsl(230deg, 5%, 55%);
-  font-size: .85rem;
+  font-size: .8rem;
 }
 
 .card {
@@ -300,7 +300,7 @@ h3 {
 
 #paletteGrid.show-names .palette-cell .name {
   display: inline;
-  font-size: .75rem;
+  font-size: .7rem;
   overflow: hidden;
   text-overflow: ellipsis;
   flex: 1 1 auto;
@@ -332,7 +332,7 @@ h3 {
 }
 
 button {
-  padding: 0.45rem 0.9rem;
+  padding: 0.5rem 1rem;
   background: hsl(230deg, 5%, 18%);
   color: hsl(230deg, 5%, 90%);
   border: 1px solid #3b3d3f;
@@ -359,7 +359,7 @@ button:disabled {
 }
 
 select {
-  padding: 0.45rem 0.9rem;
+  padding: 0.5rem 1rem;
   background: #494950;
   color: hsl(230deg, 5%, 90%);
   border: 0;
@@ -394,7 +394,7 @@ select:focus {
   user-select: none;
   font-family: Quicksand, sans-serif;
   font-weight: 100;
-  font-size: .9rem;
+  font-size: 1rem;
   color: hsl(230deg, 5%, 75%);
 }
 
@@ -481,7 +481,7 @@ textarea {
   word-break: break-word;
   font-family: Quicksand, sans-serif;
   font-weight: 100;
-  font-size: .95rem;
+  font-size: 1rem;
   box-sizing: border-box;
 }
 
@@ -552,7 +552,7 @@ textarea:focus {
   padding: 6px 12px;
   border-radius: 4px;
   cursor: grab;
-  font-size: .85rem;
+  font-size: .8rem;
   color: #000;
   font-family: "Syne Mono", monospace;
   font-weight: 100;
@@ -573,20 +573,20 @@ textarea:focus {
 
 #gradientPanel {
   border: 1px solid #3b3d3f;
-  padding: .75rem 1rem 1rem;
+  padding: .7rem 1rem 1rem;
   margin: 1rem 0;
   background: hsl(230deg, 5%, 12%);
   border-radius: 8px;
 }
 
 #gradientPanel h3 {
-  margin: 0 0 .35rem;
+  margin: 0 0 .3rem;
 }
 
 label[for="smoothnessInput"] {
   display: inline-flex;
   align-items: center;
-  padding:0.45rem 0.9rem 0.45rem 0.9rem;
+  padding:0.5rem 1rem 0.5rem 1rem;
   border: 1px solid #3b3d3f;
   border-right: 0;
   border-radius: 5px 0 0 5px;
@@ -601,7 +601,7 @@ label[for="smoothnessInput"] {
 
 #smoothnessInput {
   width: 64px;
-  padding: 0.45rem 0.6rem;
+  padding: 0.4rem 0.6rem;
   background: hsl(230deg, 5%, 18%);
   color: hsl(230deg, 5%, 90%);
   border: 1px solid #3b3d3f;
@@ -649,7 +649,7 @@ label[for="smoothnessInput"]:has(+ #smoothnessInput:disabled) {
 label:has(> input[type="checkbox"]):not(.toggle-switch) {
   display: inline-flex;
   align-items: center;
-  padding: 0.45rem 0.9rem;
+  padding: 0.5rem 1rem;
   border-radius: 5px;
   border: 1px solid #3b3d3f;
   background: hsl(230deg, 5%, 18%);
@@ -778,7 +778,7 @@ label {
 
 .credits {
   text-align: center;
-  padding: 1rem 1.25rem;
+  padding: 1rem;
   font-size: 0.8rem;
   color: hsl(230deg, 5%, 50%);
 }
