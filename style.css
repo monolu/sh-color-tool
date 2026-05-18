@@ -776,7 +776,7 @@ label {
   position: fixed;
   bottom: 10px;
   right: 16px;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   color: hsl(230deg, 5%, 50%);
   z-index: 10;
   pointer-events: auto;
