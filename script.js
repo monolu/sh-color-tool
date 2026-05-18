@@ -353,7 +353,8 @@ function snapshotState() {
   return {
     chars: chars.map(c => ({ ...c })),
     selection: getSelectionRange(),
-    activeGradientRange: activeGradientRange ? { ...activeGradientRange } : null
+    activeGradientRange: activeGradientRange ? { ...activeGradientRange } : null,
+    stops: stops.map(s => ({ ...s }))
   };
 }
 
@@ -384,6 +385,11 @@ function applyHistoryState(state) {
   activeGradientRange = state.activeGradientRange
     ? { ...state.activeGradientRange }
     : null;
+  if (state.stops) {
+    stops = state.stops.map(s => ({ ...s }));
+    renderStops();
+    updateGradientPreview();
+  }
   renderEditor();
   if (state.selection) {
     setSelectionRange(state.selection.start, state.selection.end);
@@ -893,12 +899,14 @@ function renderStops() {
     div.ondragover = e => e.preventDefault();
     div.ondrop = () => {
       if (dragIndex === null || dragIndex === i) return;
+      pushUndo({ force: true });
       const moved = stops.splice(dragIndex, 1)[0];
       stops.splice(i, 0, moved);
       afterStopsChanged();
     };
 
     div.onclick = e => {
+      pushUndo({ force: true });
       if (e.shiftKey) {
         stops = stops.filter(s2 => s2.id !== s.id);
       } else {
@@ -991,12 +999,17 @@ function handlePaletteClick(id, val, e) {
   if (gradientMode) {
     if (e.shiftKey) {
       const idx = [...stops].reverse().findIndex(s => s.id === id);
-      if (idx !== -1) stops.splice(stops.length - 1 - idx, 1);
+      if (idx === -1) return;
+      pushUndo({ force: true });
+      stops.splice(stops.length - 1 - idx, 1);
       afterStopsChanged({ apply: true });
     } else if (e.altKey) {
+      if (!stops.some(s => s.id === id)) return;
+      pushUndo({ force: true });
       stops = stops.filter(s => s.id !== id);
       afterStopsChanged({ apply: true });
     } else {
+      pushUndo({ force: true });
       stops.push({ id, ...val });
       afterStopsChanged({ apply: true });
     }
@@ -1076,6 +1089,7 @@ Object.keys(presets).forEach(name => {
 presetPicker.addEventListener("change", () => {
   const name = presetPicker.value;
   if (!name || !presets[name]) return;
+  pushUndo({ force: true });
   stops = presets[name]
     .filter(id => palette[id])
     .map(id => ({ id, ...palette[id] }));
@@ -1232,6 +1246,8 @@ redoBtn.addEventListener("click", redo);
 preserveSelectionOn(undoBtn);
 preserveSelectionOn(redoBtn);
 document.getElementById("clearStops").onclick = () => {
+  if (stops.length === 0) return;
+  pushUndo({ force: true });
   stops = [];
   afterStopsChanged({ apply: false });
 };
