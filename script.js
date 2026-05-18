@@ -431,6 +431,7 @@ const reverseBox = document.getElementById("reverse");
 const randomBox = document.getElementById("randomize");
 const smoothnessInput = document.getElementById("smoothnessInput");
 const fixedSmoothnessBox = document.getElementById("fixedSmoothness");
+const perWordBox = document.getElementById("perWord");
 const presetPicker = document.getElementById("presetPicker");
 
 editor.setAttribute("data-placeholder", "Type something, select characters, and pick colors...");
@@ -677,6 +678,45 @@ function applyColorToSelection(id) {
   return true;
 }
 
+// Iterates each char in [start, end), invoking cb(charIndex, targetColorId)
+// per the current gradient settings. Per Word always cycles one color per
+// word; otherwise Distribute Evenly / Color Gap control char-based painting.
+function forEachGradientPaint(start, end, processed, cb) {
+  if (start >= end || processed.length === 0) return;
+  const perWord = perWordBox.checked;
+
+  if (!perWord) {
+    const smoothness = Math.max(1, parseInt(smoothnessInput.value) || 3);
+    const fixedMode = !fixedSmoothnessBox.checked;
+    const len = end - start;
+    for (let i = 0; i < len; i++) {
+      let colorIndex;
+      if (fixedMode) {
+        colorIndex = Math.floor(i / smoothness) % processed.length;
+      } else {
+        colorIndex = Math.min(
+          Math.floor((i / len) * processed.length),
+          processed.length - 1
+        );
+      }
+      cb(start + i, processed[colorIndex].id);
+    }
+    return;
+  }
+
+  // Per Word: each word gets the next color in the gradient, cycling.
+  // Whitespace inherits the current word's color so spaces don't break runs.
+  let currentWord = -1;
+  let inWord = false;
+  for (let i = start; i < end; i++) {
+    const isWs = /\s/.test(chars[i].ch);
+    if (!isWs && !inWord) { currentWord++; inWord = true; }
+    else if (isWs) inWord = false;
+    const w = Math.max(0, currentWord);
+    cb(i, processed[w % processed.length].id);
+  }
+}
+
 function canApplyGradient() {
   if (stops.length === 0 || chars.length === 0) return false;
   const processed = getProcessedStops();
@@ -694,25 +734,11 @@ function canApplyGradient() {
   }
   if (start >= end) return false;
 
-  const len = end - start;
-  const smoothness = Math.max(1, parseInt(smoothnessInput.value) || 3);
-  const fixedMode = !fixedSmoothnessBox.checked;
-
-  for (let i = 0; i < len; i++) {
-    let colorIndex;
-    if (fixedMode) {
-      colorIndex = Math.floor(i / smoothness) % processed.length;
-    } else {
-      colorIndex = Math.min(
-        Math.floor((i / len) * processed.length),
-        processed.length - 1
-      );
-    }
-    if (chars[start + i].id !== processed[colorIndex].id) {
-      return true;
-    }
-  }
-  return false;
+  let changed = false;
+  forEachGradientPaint(start, end, processed, (i, id) => {
+    if (!changed && chars[i].id !== id) changed = true;
+  });
+  return changed;
 }
 
 function syncApplyButton() {
@@ -730,22 +756,9 @@ function recolorGradientRegion() {
   const end = Math.min(chars.length, activeGradientRange.end);
   if (start >= end) return false;
 
-  const len = end - start;
-  const smoothness = Math.max(1, parseInt(smoothnessInput.value) || 3);
-  const fixedMode = !fixedSmoothnessBox.checked;
-
-  for (let i = 0; i < len; i++) {
-    let colorIndex;
-    if (fixedMode) {
-      colorIndex = Math.floor(i / smoothness) % processed.length;
-    } else {
-      colorIndex = Math.min(
-        Math.floor((i / len) * processed.length),
-        processed.length - 1
-      );
-    }
-    chars[start + i].id = processed[colorIndex].id;
-  }
+  forEachGradientPaint(start, end, processed, (i, id) => {
+    chars[i].id = id;
+  });
   return true;
 }
 
@@ -790,27 +803,14 @@ function applyGradientToSelection({ debounceUndo = false, silent = false, fallba
     return;
   }
 
-  const len = sel.end - sel.start;
-  const smoothness = Math.max(1, parseInt(smoothnessInput.value) || 3);
-  const fixedMode = !fixedSmoothnessBox.checked;
-
   if (debounceUndo) {
     pushUndo({ debounce: true });
   } else {
     pushUndo({ force: true });
   }
-  for (let i = 0; i < len; i++) {
-    let colorIndex;
-    if (fixedMode) {
-      colorIndex = Math.floor(i / smoothness) % processed.length;
-    } else {
-      colorIndex = Math.min(
-        Math.floor((i / len) * processed.length),
-        processed.length - 1
-      );
-    }
-    chars[sel.start + i].id = processed[colorIndex].id;
-  }
+  forEachGradientPaint(sel.start, sel.end, processed, (i, id) => {
+    chars[i].id = id;
+  });
 
   renderEditor();
   setSelectionRange(sel.start, sel.end);
@@ -1285,20 +1285,31 @@ toggleNamesInput.addEventListener("change", () => {
   paletteGrid.classList.toggle("show-names", toggleNamesInput.checked);
 });
 
-[mirrorBox, reverseBox, randomBox, smoothnessInput, fixedSmoothnessBox].forEach(el => {
+[mirrorBox, reverseBox, randomBox, smoothnessInput, fixedSmoothnessBox, perWordBox].forEach(el => {
   el.addEventListener("input", () => {
     updateGradientPreview();
     if (gradientMode) applyGradientToSelection({ debounceUndo: true, silent: true });
   });
 });
 
-function syncSmoothnessEnabled() {
-  smoothnessInput.disabled = fixedSmoothnessBox.checked;
+function syncGradientControlStates() {
+  const perWord = perWordBox.checked;
+  const distribute = fixedSmoothnessBox.checked;
+  smoothnessInput.disabled = perWord || distribute;
+  fixedSmoothnessBox.disabled = perWord;
+  perWordBox.disabled = distribute;
 }
-fixedSmoothnessBox.addEventListener("change", syncSmoothnessEnabled);
-syncSmoothnessEnabled();
+perWordBox.addEventListener("change", () => {
+  if (perWordBox.checked) fixedSmoothnessBox.checked = false;
+  syncGradientControlStates();
+});
+fixedSmoothnessBox.addEventListener("change", () => {
+  if (fixedSmoothnessBox.checked) perWordBox.checked = false;
+  syncGradientControlStates();
+});
+syncGradientControlStates();
 
-[mirrorBox, reverseBox, randomBox, fixedSmoothnessBox].forEach(preserveSelectionOn);
+[mirrorBox, reverseBox, randomBox, fixedSmoothnessBox, perWordBox].forEach(preserveSelectionOn);
 
 rawOutput.addEventListener("input", () => {
   pushUndo({ debounce: true });
