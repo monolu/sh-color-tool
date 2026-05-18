@@ -1,7 +1,7 @@
 body {
   background: hsl(230deg, 5%, 5%);
   color: hsl(230deg, 5%, 80%);
-  font-family: "Syne Mono", monospace;
+  font-family: Quicksand, sans-serif;
   font-weight: 100;
   padding: 0;
   margin: 0;
@@ -83,7 +83,7 @@ h3 {
   border: 0;
   padding: 8px 22px;
   border-radius: 6px;
-  font-family: "Syne Mono", monospace;
+  font-family: Quicksand, sans-serif;
   font-weight: 100;
   font-size: 1rem;
   letter-spacing: 0.08em;
@@ -183,7 +183,7 @@ h3 {
   position: absolute;
   top: -2px;
   right: -2px;
-  font-family: "Syne Mono", monospace;
+  font-family: Quicksand, sans-serif;
   font-weight: 100;
   font-size: 9px;
   line-height: 1.2;
@@ -297,7 +297,7 @@ h3 {
 
 #paletteGrid.show-names .palette-cell .code {
   display: inline;
-  font-family: "Syne Mono", monospace;
+  font-family: Quicksand, sans-serif;
   font-size: .8rem;
   letter-spacing: 0.02em;
   flex: 0 0 auto;
@@ -347,7 +347,7 @@ button {
   color: hsl(230deg, 5%, 90%);
   border: 1px solid #3b3d3f;
   border-radius: 5px;
-  font-family: "Syne Mono", monospace;
+  font-family: Quicksand, sans-serif;
   font-weight: 100;
   font-size: 1rem;
   cursor: pointer;
@@ -375,7 +375,7 @@ select {
   color: hsl(230deg, 5%, 90%);
   border: 0;
   border-radius: 5px;
-  font-family: "Syne Mono", monospace;
+  font-family: Quicksand, sans-serif;
   font-weight: 100;
   font-size: 1rem;
   cursor: pointer;
@@ -404,7 +404,7 @@ select:focus {
   gap: 10px;
   cursor: pointer;
   user-select: none;
-  font-family: "Syne Mono", monospace;
+  font-family: Quicksand, sans-serif;
   font-weight: 100;
   font-size: .9rem;
   color: hsl(230deg, 5%, 75%);
@@ -495,7 +495,7 @@ textarea {
   border-radius: 6px;
   white-space: pre-wrap;
   word-break: break-word;
-  font-family: "Syne Mono", monospace;
+  font-family: Quicksand, sans-serif;
   font-weight: 100;
   font-size: .95rem;
   box-sizing: border-box;
@@ -523,7 +523,7 @@ textarea:focus {
   border-radius: 6px;
   white-space: pre-wrap;
   word-break: break-word;
-  font-family: "Syne Mono", monospace;
+  font-family: Quicksand, sans-serif;
   font-weight: 100;
   font-size: 1.05rem;
   line-height: 1.5;
@@ -577,7 +577,7 @@ textarea:focus {
   cursor: grab;
   font-size: .85rem;
   color: #000;
-  font-family: "Syne Mono", monospace;
+  font-family: Quicksand, sans-serif;
   font-weight: 100;
   letter-spacing: 0.05em;
   user-select: none;
@@ -614,7 +614,7 @@ textarea:focus {
   color: hsl(230deg, 5%, 90%);
   border: 0;
   border-radius: 5px;
-  font-family: "Syne Mono", monospace;
+  font-family: Quicksand, sans-serif;
   font-weight: 100;
   font-size: 1rem;
 }
