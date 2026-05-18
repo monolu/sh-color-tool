@@ -595,7 +595,7 @@ textarea:focus {
   color: hsl(230deg, 5%, 90%);
   border: 0;
   border-radius: 5px;
-  font-family: Quicksand, sans-serif;
+  font-family: "Syne Mono", monospace;
   font-weight: 100;
   font-size: 1rem;
 }
