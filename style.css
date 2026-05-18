@@ -295,7 +295,6 @@ h3 {
 
 #paletteGrid.show-names .palette-cell .name {
   display: inline;
-  color: hsl(230deg, 5%, 75%);
   font-size: .75rem;
   letter-spacing: 0.02em;
   overflow: hidden;

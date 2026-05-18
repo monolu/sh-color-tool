@@ -1047,6 +1047,7 @@ for (let g = 0; g < 6; g++) {
         const name = document.createElement("span");
         name.className = "name";
         name.textContent = names[id] || "";
+        name.style.color = val.hex;
 
         cell.append(swatch, badge, code, name);
 
