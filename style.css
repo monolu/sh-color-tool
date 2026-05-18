@@ -601,7 +601,7 @@ label[for="smoothnessInput"] {
 
 #smoothnessInput {
   width: 64px;
-  padding: 0.4rem 0.6rem;
+  padding: 0.5rem 0.6rem;
   background: hsl(230deg, 5%, 18%);
   color: hsl(230deg, 5%, 90%);
   border: 1px solid #3b3d3f;
