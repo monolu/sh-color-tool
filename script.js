@@ -690,7 +690,7 @@ function canApplyGradient() {
 
   const len = end - start;
   const smoothness = Math.max(1, parseInt(smoothnessInput.value) || 3);
-  const fixedMode = fixedSmoothnessBox.checked;
+  const fixedMode = !fixedSmoothnessBox.checked;
 
   for (let i = 0; i < len; i++) {
     let colorIndex;
@@ -726,7 +726,7 @@ function recolorGradientRegion() {
 
   const len = end - start;
   const smoothness = Math.max(1, parseInt(smoothnessInput.value) || 3);
-  const fixedMode = fixedSmoothnessBox.checked;
+  const fixedMode = !fixedSmoothnessBox.checked;
 
   for (let i = 0; i < len; i++) {
     let colorIndex;
@@ -786,7 +786,7 @@ function applyGradientToSelection({ debounceUndo = false, silent = false, fallba
 
   const len = sel.end - sel.start;
   const smoothness = Math.max(1, parseInt(smoothnessInput.value) || 3);
-  const fixedMode = fixedSmoothnessBox.checked;
+  const fixedMode = !fixedSmoothnessBox.checked;
 
   if (debounceUndo) {
     pushUndo({ debounce: true });
@@ -887,7 +887,7 @@ function renderStops() {
     div.draggable = true;
     div.style.background = s.hex;
     div.textContent = s.id;
-    div.title = `${s.id} (xterm ${s.x}) — click to remove`;
+    div.title = `${s.id} (${names[s.id]}), click to remove`;
 
     div.ondragstart = () => (dragIndex = i);
     div.ondragover = e => e.preventDefault();
@@ -1061,7 +1061,7 @@ for (let g = 0; g < 6; g++) {
 
 const placeholderOpt = document.createElement("option");
 placeholderOpt.value = "";
-placeholderOpt.textContent = "(pick a preset…)";
+placeholderOpt.textContent = "(pick a preset)";
 placeholderOpt.disabled = true;
 placeholderOpt.selected = true;
 presetPicker.appendChild(placeholderOpt);
@@ -1275,6 +1275,12 @@ toggleNamesInput.addEventListener("change", () => {
     if (gradientMode) applyGradientToSelection({ debounceUndo: true, silent: true });
   });
 });
+
+function syncSmoothnessEnabled() {
+  smoothnessInput.disabled = fixedSmoothnessBox.checked;
+}
+fixedSmoothnessBox.addEventListener("change", syncSmoothnessEnabled);
+syncSmoothnessEnabled();
 
 [mirrorBox, reverseBox, randomBox, fixedSmoothnessBox].forEach(preserveSelectionOn);
 

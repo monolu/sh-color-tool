@@ -558,7 +558,7 @@ textarea:focus {
   cursor: grab;
   font-size: .85rem;
   color: #000;
-  font-family: Quicksand, sans-serif;
+  font-family: "Syne Mono", monospace;
   font-weight: 100;
   letter-spacing: 0.05em;
   user-select: none;
@@ -602,6 +602,26 @@ textarea:focus {
 
 #smoothnessInput:focus {
   outline: 1px solid deepskyblue;
+}
+
+#smoothnessInput:disabled {
+  background: hsl(230deg, 5%, 18%);
+  color: hsl(230deg, 5%, 40%);
+  cursor: not-allowed;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+#smoothnessInput:disabled::-webkit-inner-spin-button,
+#smoothnessInput:disabled::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  display: none;
+}
+
+label[for="smoothnessInput"]:has(+ #smoothnessInput:disabled) {
+  color: hsl(230deg, 5%, 40%);
+  cursor: not-allowed;
 }
 
 input[type="checkbox"] {
