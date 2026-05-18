@@ -176,7 +176,7 @@ h3 {
   position: absolute;
   top: -2px;
   right: -2px;
-  font-family: Quicksand, sans-serif;
+  font-family: "Syne Mono", monospace;
   font-weight: 100;
   font-size: 9px;
   line-height: 1.2;
@@ -620,6 +620,11 @@ textarea:focus {
 }
 
 label[for="smoothnessInput"]:has(+ #smoothnessInput:disabled) {
+  color: hsl(230deg, 5%, 40%);
+  cursor: not-allowed;
+}
+
+label:has(> input[type="checkbox"]:disabled) {
   color: hsl(230deg, 5%, 40%);
   cursor: not-allowed;
 }
