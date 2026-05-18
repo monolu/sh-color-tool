@@ -333,6 +333,11 @@ let stops = [];
 let gradientMode = false;
 let pendingColor = "333";
 let pendingChangeStart = null;
+let prevCharsLength = 0;
+// Range painted by the most recent gradient apply. Typing at/within the range
+// extends it; typing outside leaves it alone (so prior gradient regions don't
+// get retroactively overwritten by the current gradient).
+let activeGradientRange = null;
 
 const undoStack = [];
 const redoStack = [];
@@ -347,7 +352,8 @@ let focusedDidSelect = false;
 function snapshotState() {
   return {
     chars: chars.map(c => ({ ...c })),
-    selection: getSelectionRange()
+    selection: getSelectionRange(),
+    activeGradientRange: activeGradientRange ? { ...activeGradientRange } : null
   };
 }
 
@@ -375,6 +381,9 @@ function syncHistoryButtons() {
 function applyHistoryState(state) {
   suppressHistory = true;
   chars = state.chars.map(c => ({ ...c }));
+  activeGradientRange = state.activeGradientRange
+    ? { ...state.activeGradientRange }
+    : null;
   renderEditor();
   if (state.selection) {
     setSelectionRange(state.selection.start, state.selection.end);
@@ -705,27 +714,59 @@ function syncApplyButton() {
   if (btn) btn.disabled = !canApplyGradient();
 }
 
-function recolorAllWithGradient() {
-  if (!gradientMode || stops.length === 0 || chars.length === 0) return false;
+// Repaint just the activeGradientRange with the current gradient settings.
+function recolorGradientRegion() {
+  if (!gradientMode || !activeGradientRange || stops.length === 0) return false;
   const processed = getProcessedStops();
   if (!processed.length) return false;
 
+  const start = Math.max(0, activeGradientRange.start);
+  const end = Math.min(chars.length, activeGradientRange.end);
+  if (start >= end) return false;
+
+  const len = end - start;
   const smoothness = Math.max(1, parseInt(smoothnessInput.value) || 3);
   const fixedMode = fixedSmoothnessBox.checked;
 
-  for (let i = 0; i < chars.length; i++) {
+  for (let i = 0; i < len; i++) {
     let colorIndex;
     if (fixedMode) {
       colorIndex = Math.floor(i / smoothness) % processed.length;
     } else {
       colorIndex = Math.min(
-        Math.floor((i / chars.length) * processed.length),
+        Math.floor((i / len) * processed.length),
         processed.length - 1
       );
     }
-    chars[i].id = processed[colorIndex].id;
+    chars[start + i].id = processed[colorIndex].id;
   }
   return true;
+}
+
+// Adjusts activeGradientRange for an edit at `changeStart` of net `delta` chars.
+// Returns true if the range was extended/shifted and the caller should recolor it.
+function adjustGradientRangeForChange(changeStart, delta) {
+  if (!activeGradientRange || delta === 0) return false;
+  const r = activeGradientRange;
+  if (delta > 0) {
+    if (changeStart < r.start) {
+      activeGradientRange = { start: r.start + delta, end: r.end + delta };
+      return false;
+    }
+    if (changeStart <= r.end) {
+      activeGradientRange = { start: r.start, end: r.end + delta };
+      return true;
+    }
+    return false;
+  }
+  const delEnd = changeStart + (-delta);
+  if (delEnd <= r.start) {
+    activeGradientRange = { start: r.start + delta, end: r.end + delta };
+    return false;
+  }
+  if (changeStart >= r.end) return false;
+  activeGradientRange = null;
+  return false;
 }
 
 function applyGradientToSelection({ debounceUndo = false, silent = false, fallbackToAll = false } = {}) {
@@ -768,6 +809,7 @@ function applyGradientToSelection({ debounceUndo = false, silent = false, fallba
   renderEditor();
   setSelectionRange(sel.start, sel.end);
   lastEditorSelection = { start: sel.start, end: sel.end };
+  activeGradientRange = { start: sel.start, end: sel.end };
   focusedDidSelect = true;
   updateOutputs();
   syncPaletteUI();
@@ -789,6 +831,7 @@ function clearText() {
   if (chars.length === 0) return;
   pushUndo({ force: true });
   chars = [];
+  activeGradientRange = null;
   renderEditor();
   updateOutputs();
   syncPaletteUI();
@@ -1058,10 +1101,9 @@ editor.addEventListener("beforeinput", () => {
   syncFromDOM();
   pushUndo({ debounce: true });
 
-  if (!gradientMode && pendingColor !== null) {
-    const sel = getSelectionRange();
-    pendingChangeStart = sel ? sel.start : chars.length;
-  }
+  const sel = getSelectionRange();
+  pendingChangeStart = sel ? sel.start : chars.length;
+  prevCharsLength = chars.length;
 });
 
 editor.addEventListener("input", () => {
@@ -1079,9 +1121,18 @@ editor.addEventListener("input", () => {
       }
     }
   }
+
+  let didGradientApply = false;
+  if (gradientMode && pendingChangeStart !== null) {
+    const delta = chars.length - prevCharsLength;
+    if (adjustGradientRangeForChange(pendingChangeStart, delta)) {
+      didGradientApply = recolorGradientRegion();
+    }
+  }
+
   pendingChangeStart = null;
 
-  if (recolorAllWithGradient() || didBrushApply) {
+  if (didGradientApply || didBrushApply) {
     const sel = getSelectionRange();
     const cursorPos = sel ? sel.end : chars.length;
     renderEditor();
@@ -1149,12 +1200,18 @@ editor.addEventListener("paste", e => {
     inserted = [...text].map(ch => ({ ch, id: inheritId }));
   }
 
+  const prevLen = chars.length;
   chars = [
     ...chars.slice(0, insStart),
     ...inserted,
     ...chars.slice(insEnd)
   ];
-  recolorAllWithGradient();
+  if (gradientMode) {
+    const delta = chars.length - prevLen;
+    if (adjustGradientRangeForChange(insStart, delta)) {
+      recolorGradientRegion();
+    }
+  }
   renderEditor();
   setSelectionRange(insStart + inserted.length, insStart + inserted.length);
   updateOutputs();
@@ -1185,6 +1242,7 @@ const modeButtons = document.querySelectorAll(".mode-btn");
 const gradientPanel = document.getElementById("gradientPanel");
 function setMode(mode) {
   gradientMode = (mode === "gradient");
+  if (!gradientMode) activeGradientRange = null;
   modeButtons.forEach(b => {
     const isActive = b.dataset.mode === mode;
     b.classList.toggle("active", isActive);
