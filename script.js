@@ -334,9 +334,6 @@ let gradientMode = false;
 let pendingColor = "333";
 let pendingChangeStart = null;
 let prevCharsLength = 0;
-// Range painted by the most recent gradient apply. Typing at/within the range
-// extends it; typing outside leaves it alone (so prior gradient regions don't
-// get retroactively overwritten by the current gradient).
 let activeGradientRange = null;
 
 const undoStack = [];
@@ -678,9 +675,6 @@ function applyColorToSelection(id) {
   return true;
 }
 
-// Iterates each char in [start, end), invoking cb(charIndex, targetColorId)
-// per the current gradient settings. Per Word always cycles one color per
-// word; otherwise Distribute Evenly / Color Gap control char-based painting.
 function forEachGradientPaint(start, end, processed, cb) {
   if (start >= end || processed.length === 0) return;
   const perWord = perWordBox.checked;
@@ -704,8 +698,6 @@ function forEachGradientPaint(start, end, processed, cb) {
     return;
   }
 
-  // Per Word: each word gets the next color in the gradient, cycling.
-  // Whitespace inherits the current word's color so spaces don't break runs.
   let currentWord = -1;
   let inWord = false;
   for (let i = start; i < end; i++) {
@@ -746,7 +738,6 @@ function syncApplyButton() {
   if (btn) btn.disabled = !canApplyGradient();
 }
 
-// Repaint just the activeGradientRange with the current gradient settings.
 function recolorGradientRegion() {
   if (!gradientMode || !activeGradientRange || stops.length === 0) return false;
   const processed = getProcessedStops();
@@ -762,8 +753,6 @@ function recolorGradientRegion() {
   return true;
 }
 
-// Adjusts activeGradientRange for an edit at `changeStart` of net `delta` chars.
-// Returns true if the range was extended/shifted and the caller should recolor it.
 function adjustGradientRangeForChange(changeStart, delta) {
   if (!activeGradientRange || delta === 0) return false;
   const r = activeGradientRange;
@@ -1094,7 +1083,6 @@ presetPicker.addEventListener("change", () => {
     .filter(id => palette[id])
     .map(id => ({ id, ...palette[id] }));
   afterStopsChanged();
-  // applyGradient inside afterStopsChanged focuses the editor
   presetPicker.focus();
 });
 

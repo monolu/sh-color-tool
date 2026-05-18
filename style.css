@@ -197,14 +197,11 @@ h3 {
   display: inline-block;
 }
 
-/* Swatch state: this color is somewhere in the current selection. */
 .palette-cell.is-current {
   border-color: #fff;
   box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
 }
 
-/* Swatch state: this is the active brush — what newly typed text will use.
-   Distinct gold ring, separate from in-gradient (blue) and is-current (white). */
 .palette-cell.is-brush {
   border-color: #FFBF27;
   box-shadow: 0 0 6px rgba(255, 191, 39, 0.7);
@@ -588,24 +585,52 @@ textarea:focus {
   margin: 0 0 .35rem;
 }
 
-#smoothnessInput {
-  width: 70px;
-  padding: 0.35rem 0.5rem;
-  background: #494950;
+label[for="smoothnessInput"] {
+  display: inline-flex;
+  align-items: center;
+  padding:0.45rem 0.9rem 0.45rem 0.9rem;
+  border: 1px solid #3b3d3f;
+  border-right: 0;
+  border-radius: 5px 0 0 5px;
+  background: hsl(230deg, 5%, 18%);
   color: hsl(230deg, 5%, 90%);
-  border: 0;
-  border-radius: 5px;
   font-family: "Syne Mono", monospace;
   font-weight: 100;
   font-size: 1rem;
+  letter-spacing: 0.05em;
+  margin-right: -10px;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+
+#smoothnessInput {
+  width: 64px;
+  padding: 0.45rem 0.6rem;
+  background: hsl(230deg, 5%, 18%);
+  color: hsl(230deg, 5%, 90%);
+  border: 1px solid #3b3d3f;
+  border-radius: 0 5px 5px 0;
+  font-family: "Syne Mono", monospace;
+  font-weight: 100;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+
+#smoothnessInput:hover:not(:disabled),
+label[for="smoothnessInput"]:has(+ #smoothnessInput:hover:not(:disabled)) {
+  border-color: deepskyblue;
+  background: hsl(230deg, 5%, 25%);
+  color: white;
 }
 
 #smoothnessInput:focus {
-  outline: 1px solid deepskyblue;
+  outline: none;
+  border-color: deepskyblue;
+  box-shadow: 0 0 6px hsl(195deg, 100%, 50%, .35);
 }
 
 #smoothnessInput:disabled {
-  background: hsl(230deg, 5%, 18%);
+  background: hsl(230deg, 5%, 12%);
   color: hsl(230deg, 5%, 40%);
   cursor: not-allowed;
   -moz-appearance: textfield;
@@ -620,18 +645,85 @@ textarea:focus {
 }
 
 label[for="smoothnessInput"]:has(+ #smoothnessInput:disabled) {
+  background: hsl(230deg, 5%, 12%);
   color: hsl(230deg, 5%, 40%);
   cursor: not-allowed;
 }
 
-label:has(> input[type="checkbox"]:disabled) {
-  color: hsl(230deg, 5%, 40%);
-  cursor: not-allowed;
-}
-
-input[type="checkbox"] {
-  accent-color: deepskyblue;
+label:has(> input[type="checkbox"]):not(.toggle-switch) {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.9rem;
+  border-radius: 5px;
+  border: 1px solid #3b3d3f;
+  background: hsl(230deg, 5%, 18%);
+  color: hsl(230deg, 5%, 90%);
   cursor: pointer;
+  user-select: none;
+  font-family: "Syne Mono", monospace;
+  font-weight: 100;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+
+label:has(> input[type="checkbox"]):not(.toggle-switch)::before {
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-right: 8px;
+  border: 1px solid hsl(230deg, 5%, 55%);
+  border-radius: 3px;
+  background: hsl(230deg, 5%, 12%);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 11px 11px;
+  flex-shrink: 0;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+
+label:has(> input[type="checkbox"]:checked):not(.toggle-switch)::before {
+  background-color: white;
+  border-color: white;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23146e8e' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' d='M3 8l3 3 7-7'/%3E%3C/svg%3E");
+}
+
+label:has(> input[type="checkbox"]):not(.toggle-switch):hover:not(:has(> input:disabled)) {
+  background: hsl(230deg, 5%, 25%);
+  color: white;
+}
+
+label:has(> input[type="checkbox"]):not(.toggle-switch):hover:not(:has(> input:disabled))::before {
+  border-color: deepskyblue;
+}
+
+label:has(> input[type="checkbox"]:checked):not(.toggle-switch) {
+  background: hsl(195deg, 80%, 30%);
+  color: white;
+  border-color: deepskyblue;
+}
+
+label:has(> input[type="checkbox"]:checked):not(.toggle-switch):hover:not(:has(> input:disabled)) {
+  background: hsl(195deg, 90%, 38%);
+}
+
+label:has(> input[type="checkbox"]:disabled):not(.toggle-switch) {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+label:has(> input[type="checkbox"]:focus-visible):not(.toggle-switch) {
+  outline: 1px solid hsl(230deg, 5%, 90%);
+}
+
+label:not(.toggle-switch) > input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  pointer-events: none;
 }
 
 label {
