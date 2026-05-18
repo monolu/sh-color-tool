@@ -289,14 +289,12 @@ h3 {
   display: inline;
   font-family: Quicksand, sans-serif;
   font-size: .8rem;
-  letter-spacing: 0.02em;
   flex: 0 0 auto;
 }
 
 #paletteGrid.show-names .palette-cell .name {
   display: inline;
   font-size: .75rem;
-  letter-spacing: 0.02em;
   overflow: hidden;
   text-overflow: ellipsis;
   flex: 1 1 auto;
@@ -337,7 +335,6 @@ button {
   font-weight: 100;
   font-size: 1rem;
   cursor: pointer;
-  letter-spacing: 0.05em;
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
 
@@ -365,7 +362,6 @@ select {
   font-weight: 100;
   font-size: 1rem;
   cursor: pointer;
-  letter-spacing: 0.05em;
   transition: background .15s ease;
 }
 
@@ -556,7 +552,6 @@ textarea:focus {
   color: #000;
   font-family: "Syne Mono", monospace;
   font-weight: 100;
-  letter-spacing: 0.05em;
   user-select: none;
 }
 
@@ -596,7 +591,6 @@ label[for="smoothnessInput"] {
   font-family: "Syne Mono", monospace;
   font-weight: 100;
   font-size: 1rem;
-  letter-spacing: 0.05em;
   margin-right: -10px;
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
@@ -611,7 +605,6 @@ label[for="smoothnessInput"] {
   font-family: "Syne Mono", monospace;
   font-weight: 100;
   font-size: 1rem;
-  letter-spacing: 0.05em;
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
 
@@ -662,7 +655,6 @@ label:has(> input[type="checkbox"]):not(.toggle-switch) {
   font-family: "Syne Mono", monospace;
   font-weight: 100;
   font-size: 1rem;
-  letter-spacing: 0.05em;
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
 
@@ -733,7 +725,6 @@ label {
   margin: 6px 0;
   font-size: .8rem;
   color: hsl(230deg, 5%, 55%);
-  letter-spacing: 0.05em;
 }
 
 #rawCounterChars {
@@ -778,4 +769,25 @@ label {
   h1 {
     font-size: 1.3rem;
   }
+}
+
+
+.credits {
+  position: fixed;
+  bottom: 10px;
+  right: 16px;
+  font-size: 0.8rem;
+  color: hsl(230deg, 5%, 50%);
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.credits a {
+  color: hsl(230deg, 5%, 75%);
+  text-decoration: none;
+  transition: color .15s ease;
+}
+
+.credits a:hover {
+  color: deepskyblue;
 }
