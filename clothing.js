@@ -146,14 +146,18 @@ const COVERAGE_PRESETS = {
   FACE_HEAD_NECK_OFF: { mandatory: ["face"], optional: [{ part: "head", defaultOn: false }, { part: "neck", defaultOn: false }] },
   NECK: { mandatory: ["neck"], optional: [] },
   NECK_HEAD_OFF: { mandatory: ["neck"], optional: [{ part: "head", defaultOn: false }] },
+  NECK_FACE_OFF: { mandatory: ["neck"], optional: [{ part: "face", defaultOn: false }] },
   TORSO: { mandatory: ["torso"], optional: [] },
   TORSO_ARMS_OFF: { mandatory: ["torso"], optional: [{ part: "arms", defaultOn: false }] },
   TORSO_ARMS_ON_NECK_OFF: { mandatory: ["torso"], optional: [{ part: "arms", defaultOn: true }, { part: "neck", defaultOn: false }] },
   TORSO_LEGS_ON: { mandatory: ["torso"], optional: [{ part: "legs", defaultOn: true }] },
   TORSO_LEGS_ON_ARMS_OFF: { mandatory: ["torso"], optional: [{ part: "legs", defaultOn: true }, { part: "arms", defaultOn: false }] },
   TORSO_LEGS_ON_ARMS_ON: { mandatory: ["torso"], optional: [{ part: "legs", defaultOn: true }, { part: "arms", defaultOn: true }] },
+  TORSO_ARMS_ON_LEGS_ON: { mandatory: ["torso"], optional: [{ part: "arms", defaultOn: true }, { part: "legs", defaultOn: true }] },
+  ARMS_TORSO_ON: { mandatory: ["arms"], optional: [{ part: "torso", defaultOn: true }] },
   ARMS_TORSO_ON_LEGS_ON: { mandatory: ["arms"], optional: [{ part: "torso", defaultOn: true }, { part: "legs", defaultOn: true }] },
   ARMS_TORSO_ON_HEAD_ON: { mandatory: ["arms"], optional: [{ part: "torso", defaultOn: true }, { part: "head", defaultOn: true }] },
+  HANDS: { mandatory: ["hands"], optional: [] },
   HANDS_ARMS_ON: { mandatory: ["hands"], optional: [{ part: "arms", defaultOn: true }] },
   HANDS_ARMS_OFF: { mandatory: ["hands"], optional: [{ part: "arms", defaultOn: false }] },
   ARMS: { mandatory: ["arms"], optional: [] },
@@ -169,10 +173,10 @@ const CATEGORIES_RAW = [
   ["Headwear", [
     ["Beret", "HEAD"], ["Bonnet", "HEAD"], ["Cap", "HEAD"], ["Hat", "HEAD"],
     ["Turban", "HEAD"], ["Hood", "HEAD_NECK_OFF"], ["Veil", "HEAD_NECK_OFF"],
-    ["Mask", "FACE_HEAD_NECK_OFF"], ["Makeup", "NONE"], ["Wig", "HEAD"]
+    ["Mask", "FACE_HEAD_NECK_OFF"], ["Makeup", "FACE_HEAD_NECK_OFF"], ["Wig", "HEAD"]
   ]],
   ["Neckwear", [
-    ["Collar", "NECK"], ["Scarf", "NECK"], ["Shawl", "NECK_HEAD_OFF"]
+    ["Collar", "NECK"], ["Scarf", "NECK_FACE_OFF"], ["Shawl", "NECK_HEAD_OFF"]
   ]],
   ["Tops", [
     ["Corset", "TORSO"], ["Camisole", "TORSO"], ["T-Shirt", "TORSO"],
@@ -192,16 +196,16 @@ const CATEGORIES_RAW = [
     ["Sari", "TORSO_LEGS_ON_ARMS_ON"]
   ]],
   ["Coats & Outerwear", [
-    ["Blazer", "TORSO_ARMS_OFF"], ["Jacket", "TORSO_ARMS_ON_NECK_OFF"],
+    ["Blazer", "ARMS_TORSO_ON"], ["Jacket", "ARMS_TORSO_ON"],
     ["Cloak", "ARMS_TORSO_ON_LEGS_ON"], ["Duster", "ARMS_TORSO_ON_LEGS_ON"],
-    ["Kaftan", "TORSO_LEGS_ON_ARMS_ON"], ["Overcoat", "ARMS_TORSO_ON_LEGS_ON"],
+    ["Kaftan", "TORSO_ARMS_ON_LEGS_ON"], ["Overcoat", "ARMS_TORSO_ON_LEGS_ON"],
     ["Poncho", "ARMS_TORSO_ON_LEGS_ON"], ["Robe", "ARMS_TORSO_ON_LEGS_ON"],
     ["Trenchcoat", "ARMS_TORSO_ON_LEGS_ON"], ["Hoodie", "ARMS_TORSO_ON_HEAD_ON"],
     ["Parka", "ARMS_TORSO_ON_HEAD_ON"], ["Raincoat", "ARMS_TORSO_ON_HEAD_ON"],
     ["Cardigan", "ARMS_TORSO_ON_LEGS_ON"]
   ]],
   ["Gloves & Arm Warmers", [
-    ["Gloves", "HANDS_ARMS_ON"], ["Mittens", "HANDS_ARMS_OFF"], ["Arm Warmers", "ARMS"]
+    ["Gloves", "HANDS_ARMS_ON"], ["Mittens", "HANDS"], ["Arm Warmers", "ARMS"]
   ]],
   ["Trousers, Pants & Skirts", [
     ["Bell Bottoms", "LEGS"], ["Chaps", "LEGS"], ["Jeans", "LEGS"],
@@ -792,6 +796,72 @@ function resetFormToDefaults() {
   updateAllCounters();
 }
 
+function buildGameCommands() {
+  if (!state.categoryId || !state.itemId) return "";
+  const lines = [];
+  lines.push("craft clothing");
+  lines.push(String(state.categoryId));
+  lines.push(String(state.itemId));
+  const prefixSet = !!state.prefix.trim();
+  const suffixSet = !!state.suffix.trim();
+  if (prefixSet) {
+    lines.push("1", state.prefix);
+  } else if (suffixSet) {
+    lines.push("1", ".");
+  }
+  if (suffixSet) lines.push("2", state.suffix);
+  if (state.colorNum) lines.push("3", String(state.colorNum));
+  if (state.unworn.trim()) lines.push("4", state.unworn);
+  if (state.worn.trim()) lines.push("5", state.worn);
+  if (state.wear.trim()) lines.push("6", state.wear);
+  if (state.remove.trim()) lines.push("7", state.remove);
+  if (state.tease.trim()) lines.push("8", state.tease);
+  const item = getItem(state.categoryId, state.itemId);
+  const cov = getCoverage(item);
+  cov.optional.forEach((opt, idx) => {
+    const slot = 9 + idx;
+    const current = !!state.coverage[opt.part];
+    if (current !== opt.defaultOn) {
+      lines.push(String(slot));
+    }
+  });
+  const reviewSlot = 9 + cov.optional.length;
+  lines.push(String(reviewSlot));
+  const sep = $("copySeparator")?.value === "mudlet" ? ";;" : "\n";
+  return lines.join(sep);
+}
+
+let copyFeedbackTimer = null;
+function flashCopyFeedback(msg) {
+  const btn = $("copyCommandsBtn");
+  if (!btn) return;
+  if (!btn.dataset.original) btn.dataset.original = btn.textContent;
+  btn.textContent = msg;
+  if (copyFeedbackTimer) clearTimeout(copyFeedbackTimer);
+  copyFeedbackTimer = setTimeout(() => {
+    btn.textContent = btn.dataset.original;
+  }, 1500);
+}
+
+async function copyGameCommands() {
+  const text = buildGameCommands();
+  if (!text) return;
+  try {
+    await navigator.clipboard.writeText(text);
+    flashCopyFeedback("Copied!");
+  } catch {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); flashCopyFeedback("Copied!"); }
+    catch { flashCopyFeedback("Couldn't copy"); }
+    document.body.removeChild(ta);
+  }
+}
+
 function init() {
   populateCategoryPicker();
   renderColorGrid();
@@ -801,6 +871,7 @@ function init() {
   $("categoryPicker").addEventListener("change", onCategoryChange);
   $("itemPicker").addEventListener("change", onItemChange);
   $("colorCurrent").addEventListener("click", toggleColorGrid);
+  $("copyCommandsBtn").addEventListener("click", copyGameCommands);
   selectInitialItem(3, 10);
 }
 

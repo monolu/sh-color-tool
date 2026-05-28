@@ -1232,7 +1232,6 @@ label {
 }
 
 .token-ref {
-  margin-top: 1.5rem;
   border: 1px solid #3b3d3f;
   border-radius: 6px;
   background: hsl(230deg, 5%, 12%);
@@ -1321,6 +1320,52 @@ label {
   top: 1rem;
   max-height: calc(100vh - 2rem);
   overflow-y: auto;
+}
+
+.copy-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.copy-row > select {
+  padding: 0.5rem 0.8rem;
+  background: hsl(230deg, 5%, 18%);
+  color: hsl(230deg, 5%, 90%);
+  border: 1px solid #3b3d3f;
+  border-radius: 5px;
+  font-family: "Syne Mono", monospace;
+  font-size: 0.9rem;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.copy-row > select:focus {
+  outline: none;
+  border-color: deepskyblue;
+  box-shadow: 0 0 6px hsl(195deg, 100%, 50%, 0.4);
+}
+
+.btn-copy-commands {
+  background: hsl(195deg, 80%, 30%);
+  color: white;
+  border: 1px solid deepskyblue;
+  padding: 0.6rem 1rem;
+  border-radius: 5px;
+  font-family: "Syne Mono", monospace;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  flex: 1 1 auto;
+}
+
+.btn-copy-commands:hover {
+  background: hsl(195deg, 90%, 38%);
+}
+
+.btn-copy-commands:focus-visible {
+  outline: none;
+  box-shadow: 0 0 6px hsl(195deg, 100%, 50%, 0.5);
 }
 
 @media (max-width: 900px) {
