@@ -11,9 +11,17 @@
 </head>
 <body>
 
+<header class="site-header">
+  <div class="site-brand">sh tools</div>
+  <nav class="site-nav" aria-label="Tools">
+    <a href="index.html" class="nav-link active" aria-current="page">Color</a>
+    <a href="clothing.html" class="nav-link">Clothing</a>
+  </nav>
+</header>
+
 <div class="card">
   <div class="card-header">
-    <h1>Silent Heaven Color Tool</h1>
+    <h1>Color Tool</h1>
     <div class="history-controls">
       <button type="button" id="undoBtn" title="Undo (Ctrl+Z)" disabled>↶ Undo</button>
       <button type="button" id="redoBtn" title="Redo (Ctrl+Y)" disabled>Redo ↷</button>
@@ -68,7 +76,7 @@
     <div id="gradientPreview"></div>
   </div>
 
-  <div id="editor" contenteditable="true" spellcheck="false"></div>
+  <div id="editor" contenteditable="true" spellcheck="true"></div>
 
   <div class="controls editor-actions">
     <button id="clearAllColors">Clear Color</button>

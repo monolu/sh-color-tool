@@ -25,24 +25,24 @@ h1, h2, h3, h4 {
 
 h1 {
   font-size: 1.6rem;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 h3 {
   margin-top: 1.5rem;
-  margin-bottom: .4rem;
+  margin-bottom: 0.4rem;
   font-size: 1rem;
 }
 
 .hint {
   color: hsl(230deg, 5%, 55%);
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 .card {
   width: 1200px;
   max-width: 95%;
-  min-height: 100vh;
+  min-height: 90vh;
   margin: 0 auto;
   padding: 1.5rem 2rem 3rem;
   border-radius: 5px;
@@ -51,12 +51,19 @@ h3 {
   box-shadow: 0 2px 3px rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 10%);
 }
 
+body.page-clothing .card {
+  background: transparent;
+  border-top: none;
+  box-shadow: none;
+}
+
 .card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
+  min-height: 2.5rem;
 }
 
 .card-header h1 {
@@ -68,13 +75,63 @@ h3 {
   gap: 6px;
 }
 
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid hsl(230deg, 5%, 18%);
+}
+
+.site-brand {
+  font-family: "Syne Mono", monospace;
+  font-size: 1.1rem;
+  color: hsl(230deg, 5%, 70%);
+  letter-spacing: 0.1em;
+}
+
+.site-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  font-family: "Syne Mono", monospace;
+  font-size: 1rem;
+  color: hsl(230deg, 5%, 70%);
+  text-decoration: none;
+  padding: 0.2rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: white;
+}
+
+.nav-link.active {
+  color: deepskyblue;
+  border-bottom-color: deepskyblue;
+}
+
+@media screen and (max-width: 700px) {
+  .site-header {
+    padding: 0.8rem 1rem;
+  }
+  .site-nav {
+    gap: 1.2rem;
+  }
+}
+
 .mode-switch {
   display: inline-flex;
   border: 1px solid #3b3d3f;
   border-radius: 8px;
   padding: 3px;
   gap: 2px;
-  margin: .25rem 0 1rem;
+  margin: 0.3rem 0 1rem;
 }
 
 .mode-btn {
@@ -86,7 +143,7 @@ h3 {
   font-size: 1rem;
   color: hsl(230deg, 5%, 65%);
   cursor: pointer;
-  transition: background .15s ease, color .15s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .mode-btn:hover {
@@ -109,7 +166,7 @@ h3 {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin: 0 0 .4rem;
+  margin: 0 0 0.4rem;
 }
 
 .palette-header h3 {
@@ -144,7 +201,7 @@ h3 {
   border-radius: 3px;
   overflow: hidden;
   user-select: none;
-  transition: transform .12s ease, border-color .12s ease;
+  transition: transform 0.1s ease, border-color 0.1s ease;
 }
 
 .palette-cell.empty {
@@ -171,7 +228,7 @@ h3 {
 
 .palette-cell.in-gradient {
   border-color: deepskyblue;
-  box-shadow: 0 0 6px hsl(195deg, 100%, 50%, .55);
+  box-shadow: 0 0 6px hsl(195deg, 100%, 50%, 0.5);
 }
 
 .position-badge {
@@ -186,7 +243,7 @@ h3 {
   background: deepskyblue;
   padding: 0 3px;
   border-radius: 6px;
-  box-shadow: 0 0 4px hsl(195deg, 100%, 50%, .6);
+  box-shadow: 0 0 4px hsl(195deg, 100%, 50%, 0.6);
   pointer-events: none;
   z-index: 3;
   max-width: 100%;
@@ -211,7 +268,7 @@ h3 {
 
 .palette-cell.in-gradient.is-current {
   border-color: deepskyblue;
-  box-shadow: 0 0 0 1px #fff, 0 0 6px hsl(195deg, 100%, 50%, .55);
+  box-shadow: 0 0 0 1px #fff, 0 0 6px hsl(195deg, 100%, 50%, 0.5);
 }
 
 #paletteGrid.show-names {
@@ -239,7 +296,7 @@ h3 {
   min-width: 0;
   white-space: nowrap;
   overflow: hidden;
-  transition: background .12s ease, border-color .12s ease;
+  transition: background 0.1s ease, border-color 0.1s ease;
 }
 
 #paletteGrid.show-names .palette-cell:hover:not(.empty) {
@@ -272,7 +329,7 @@ h3 {
 
 #paletteGrid.show-names .position-badge {
   position: static;
-  font-size: .7rem;
+  font-size: 0.7rem;
   padding: 0 4px;
   border-radius: 3px;
   flex: 0 0 auto;
@@ -284,19 +341,19 @@ h3 {
   height: 12px;
   flex: 0 0 12px;
   border-radius: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #paletteGrid.show-names .palette-cell .code {
   display: inline;
   font-family: Quicksand, sans-serif;
-  font-size: .8rem;
+  font-size: 0.8rem;
   flex: 0 0 auto;
 }
 
 #paletteGrid.show-names .palette-cell .name {
   display: inline;
-  font-size: .7rem;
+  font-size: 0.7rem;
   overflow: hidden;
   text-overflow: ellipsis;
   flex: 1 1 auto;
@@ -336,7 +393,7 @@ button {
   font-family: "Syne Mono", monospace;
   font-size: 1rem;
   cursor: pointer;
-  transition: background .15s ease, color .15s ease, border-color .15s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 button:hover:not(:disabled) {
@@ -349,7 +406,7 @@ button:focus-visible {
 }
 
 button:disabled {
-  opacity: 0.35;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
@@ -362,7 +419,7 @@ select {
   font-family: "Syne Mono", monospace;
   font-size: 1rem;
   cursor: pointer;
-  transition: background .15s ease;
+  transition: background 0.2s ease;
 }
 
 select:hover {
@@ -407,7 +464,7 @@ select:focus {
   background: hsl(230deg, 5%, 22%);
   border: 1px solid #3b3d3f;
   border-radius: 18px;
-  transition: background .15s ease, border-color .15s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
   flex: 0 0 36px;
 }
 
@@ -419,7 +476,7 @@ select:focus {
   height: 14px;
   background: hsl(230deg, 5%, 70%);
   border-radius: 50%;
-  transition: transform .18s ease, background .15s ease;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .toggle-switch input:checked ~ .toggle-track {
@@ -433,7 +490,7 @@ select:focus {
 }
 
 .toggle-switch input:focus-visible ~ .toggle-track {
-  box-shadow: 0 0 0 2px hsl(195deg, 100%, 50%, .35);
+  box-shadow: 0 0 0 2px hsl(195deg, 100%, 50%, 0.4);
 }
 
 .toggle-switch input:checked ~ .toggle-text {
@@ -453,7 +510,7 @@ select:focus {
 }
 
 .editor-actions {
-  margin-top: .4rem;
+  margin-top: 0.4rem;
   justify-content: flex-end;
 }
 
@@ -479,7 +536,7 @@ textarea {
 textarea:focus {
   outline: none;
   border-color: deepskyblue;
-  box-shadow: 0 0 6px hsl(195deg, 100%, 50%, .35);
+  box-shadow: 0 0 6px hsl(195deg, 100%, 50%, 0.4);
 }
 
 #rawOutput {
@@ -502,12 +559,12 @@ textarea:focus {
   outline: none;
   box-sizing: border-box;
   margin-bottom: 8px;
-  transition: border-color .2s ease, box-shadow .2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 #editor:focus {
   border-color: deepskyblue;
-  box-shadow: 0 0 8px hsl(195deg, 100%, 50%, .35);
+  box-shadow: 0 0 8px hsl(195deg, 100%, 50%, 0.4);
 }
 
 #editor:empty::before {
@@ -518,12 +575,12 @@ textarea:focus {
 
 #editor ::selection,
 #editor::selection {
-  background: hsla(195, 100%, 55%, 0.32);
+  background: hsla(195, 100%, 55%, 0.3);
   color: inherit;
 }
 
 #editor:not(:focus) .selection-mark {
-  background: hsla(195, 100%, 55%, 0.32);
+  background: hsla(195, 100%, 55%, 0.3);
 }
 
 #stops {
@@ -543,7 +600,7 @@ textarea:focus {
   padding: 6px 12px;
   border-radius: 4px;
   cursor: grab;
-  font-size: .8rem;
+  font-size: 0.8rem;
   color: #000;
   font-family: "Syne Mono", monospace;
   user-select: none;
@@ -563,20 +620,20 @@ textarea:focus {
 
 #gradientPanel {
   border: 1px solid #3b3d3f;
-  padding: .7rem 1rem 1rem;
+  padding: 0.7rem 1rem 1rem;
   margin: 1rem 0;
   background: hsl(230deg, 5%, 12%);
   border-radius: 8px;
 }
 
 #gradientPanel h3 {
-  margin: 0 0 .3rem;
+  margin: 0 0 0.3rem;
 }
 
 label[for="smoothnessInput"] {
   display: inline-flex;
   align-items: center;
-  padding:0.5rem 1rem 0.5rem 1rem;
+  padding: 0.5rem 1rem;
   border: 1px solid #3b3d3f;
   border-right: 0;
   border-radius: 5px 0 0 5px;
@@ -585,7 +642,7 @@ label[for="smoothnessInput"] {
   font-family: "Syne Mono", monospace;
   font-size: 1rem;
   margin-right: -10px;
-  transition: background .15s ease, color .15s ease, border-color .15s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 #smoothnessInput {
@@ -597,7 +654,7 @@ label[for="smoothnessInput"] {
   border-radius: 0 5px 5px 0;
   font-family: "Syne Mono", monospace;
   font-size: 1rem;
-  transition: background .15s ease, color .15s ease, border-color .15s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 #smoothnessInput:hover:not(:disabled),
@@ -610,7 +667,7 @@ label[for="smoothnessInput"]:has(+ #smoothnessInput:hover:not(:disabled)) {
 #smoothnessInput:focus {
   outline: none;
   border-color: deepskyblue;
-  box-shadow: 0 0 6px hsl(195deg, 100%, 50%, .35);
+  box-shadow: 0 0 6px hsl(195deg, 100%, 50%, 0.4);
 }
 
 #smoothnessInput:disabled {
@@ -646,7 +703,7 @@ label:has(> input[type="checkbox"]):not(.toggle-switch) {
   user-select: none;
   font-family: "Syne Mono", monospace;
   font-size: 1rem;
-  transition: background .15s ease, color .15s ease, border-color .15s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 label:has(> input[type="checkbox"]):not(.toggle-switch)::before {
@@ -662,7 +719,7 @@ label:has(> input[type="checkbox"]):not(.toggle-switch)::before {
   background-position: center;
   background-size: 11px 11px;
   flex-shrink: 0;
-  transition: background-color .15s ease, border-color .15s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 label:has(> input[type="checkbox"]:checked):not(.toggle-switch)::before {
@@ -691,7 +748,7 @@ label:has(> input[type="checkbox"]:checked):not(.toggle-switch):hover:not(:has(>
 }
 
 label:has(> input[type="checkbox"]:disabled):not(.toggle-switch) {
-  opacity: 0.35;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
@@ -714,7 +771,7 @@ label {
 
 #rawCounter {
   margin: 6px 0;
-  font-size: .8rem;
+  font-size: 0.8rem;
   color: hsl(230deg, 5%, 55%);
 }
 
@@ -772,9 +829,737 @@ label {
 .credits a {
   color: hsl(230deg, 5%, 75%);
   text-decoration: none;
-  transition: color .15s ease;
+  transition: color 0.2s ease;
 }
 
 .credits a:hover {
   color: deepskyblue;
+}
+
+.pickers {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 1rem 0 1.2rem;
+}
+
+.picker-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
+.picker-field > label {
+  font-size: 0.9rem;
+  color: hsl(230deg, 5%, 75%);
+  font-family: "Syne Mono", monospace;
+  cursor: default;
+}
+
+.picker-field > select,
+.picker-field > input[type="text"] {
+  padding: 0.5rem 0.8rem;
+  background: hsl(230deg, 5%, 18%);
+  color: hsl(230deg, 5%, 90%);
+  border: 1px solid #3b3d3f;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.picker-field > select {
+  font-family: "Syne Mono", monospace;
+}
+
+.picker-field > input[type="text"] {
+  font-family: Quicksand, sans-serif;
+}
+
+.picker-field > select:focus,
+.picker-field > input[type="text"]:focus {
+  outline: none;
+  border-color: deepskyblue;
+  box-shadow: 0 0 6px hsl(195deg, 100%, 50%, 0.4);
+}
+
+.picker-field > select:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media screen and (max-width: 700px) {
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.design-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1rem 1.2rem 1.2rem;
+  border: 1px solid #3b3d3f;
+  border-radius: 8px;
+  background: hsl(230deg, 5%, 12%);
+  min-width: 0;
+}
+
+#designPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+#designPanel[hidden] {
+  display: none;
+}
+
+.field > label,
+.field-header > label {
+  font-size: 0.9rem;
+  color: hsl(230deg, 5%, 75%);
+  font-family: "Syne Mono", monospace;
+}
+
+.field-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.char-count {
+  font-family: "Syne Mono", monospace;
+  font-size: 0.8rem;
+  color: hsl(230deg, 5%, 50%);
+  flex: 0 0 auto;
+}
+
+.char-count.over-limit {
+  color: hsl(32deg, 75%, 60%);
+}
+
+.field > input[type="text"],
+.field > select {
+  padding: 0.5rem 0.8rem;
+  background: hsl(230deg, 5%, 18%);
+  color: hsl(230deg, 5%, 90%);
+  border: 1px solid #3b3d3f;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field > input[type="text"] {
+  font-family: Quicksand, sans-serif;
+}
+
+.field > select {
+  font-family: "Syne Mono", monospace;
+}
+
+.field > select:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.field > input[type="text"].field-error,
+.field > select.field-error,
+.field > textarea.field-error,
+.field .color-current.field-error {
+  border-color: hsl(32deg, 75%, 55%);
+  box-shadow: 0 0 4px hsl(32deg, 75%, 55%, 0.3);
+}
+
+.field > input[type="text"].field-error:focus,
+.field > textarea.field-error:focus,
+.field .color-current.field-error:focus {
+  border-color: hsl(35deg, 85%, 60%);
+  box-shadow: 0 0 6px hsl(35deg, 85%, 60%, 0.5);
+}
+
+.field > input[type="text"]:focus {
+  outline: none;
+  border-color: deepskyblue;
+  box-shadow: 0 0 6px hsl(195deg, 100%, 50%, 0.4);
+}
+
+#designPanel textarea {
+  font-family: Quicksand, sans-serif;
+  min-height: 60px;
+}
+
+.color-current {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.5rem 0.8rem;
+  background: #111;
+  color: hsl(230deg, 5%, 90%);
+  border: 1px solid #3b3d3f;
+  border-radius: 5px;
+  font-family: "Syne Mono", monospace;
+  font-size: 0.9rem;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.color-current:hover:not(:disabled) {
+  border-color: deepskyblue;
+}
+
+.color-current:focus-visible {
+  outline: none;
+  border-color: deepskyblue;
+  box-shadow: 0 0 6px hsl(195deg, 100%, 50%, 0.4);
+}
+
+.color-current[aria-expanded="true"] {
+  border-color: deepskyblue;
+  border-bottom-color: transparent;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.color-current:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.color-current .color-swatch {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+}
+
+.color-current .color-num {
+  font-family: "Syne Mono", monospace;
+  color: hsl(230deg, 5%, 55%);
+  font-size: 0.85rem;
+  flex: 0 0 auto;
+  min-width: 2rem;
+}
+
+.color-current #colorCurrentName {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.color-current .change-text {
+  flex: 0 0 auto;
+  font-family: "Syne Mono", monospace;
+  font-size: 0.8rem;
+  color: hsl(230deg, 5%, 55%);
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+.color-current[aria-expanded="true"] .change-text {
+  font-size: 0;
+}
+
+.color-current[aria-expanded="true"] .change-text::before {
+  content: "Click to close";
+  font-size: 0.8rem;
+}
+
+.color-grid.is-hidden {
+  display: none;
+}
+
+.color-grid:not(.is-hidden) {
+  margin-top: -4px;
+  margin-bottom: 1rem;
+  border-color: deepskyblue;
+  border-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.color-swatch {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex: 0 0 24px;
+  background: transparent;
+}
+
+#colorCurrentName {
+  font-family: "Syne Mono", monospace;
+  font-size: 1rem;
+}
+
+#colorCurrentNum {
+  margin-left: auto;
+  font-family: "Syne Mono", monospace;
+}
+
+.color-grid {
+  column-width: 170px;
+  column-gap: 10px;
+  padding: 10px;
+  background: #111;
+  border: 1px solid #3b3d3f;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.color-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  font-family: "Syne Mono", monospace;
+  font-size: 0.8rem;
+  color: hsl(230deg, 5%, 85%);
+  transition: background 0.1s ease, border-color 0.1s ease;
+  min-width: 0;
+  break-inside: avoid;
+}
+
+.color-cell:hover {
+  border-color: hsl(230deg, 5%, 40%);
+}
+
+.color-cell.selected {
+  border-color: deepskyblue;
+  box-shadow: inset 0 0 0 1px deepskyblue;
+}
+
+.color-cell .swatch {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.color-cell .num {
+  flex: 0 0 auto;
+  color: hsl(230deg, 5%, 55%);
+  min-width: 1.7rem;
+  text-align: right;
+}
+
+.color-cell .name {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coverage-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.coverage-toggle {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: 1px solid #3b3d3f;
+  background: hsl(230deg, 5%, 18%);
+  color: hsl(230deg, 5%, 90%);
+  font-family: "Syne Mono", monospace;
+  font-size: 1rem;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.coverage-toggle:hover:not(.is-mandatory) {
+  background: hsl(230deg, 5%, 25%);
+  color: white;
+  border-color: deepskyblue;
+}
+
+.coverage-toggle:has(> input[type="checkbox"]:checked) {
+  background: hsl(195deg, 80%, 30%);
+  color: white;
+  border-color: deepskyblue;
+}
+
+.coverage-toggle:has(> input[type="checkbox"]:checked):hover {
+  background: hsl(195deg, 90%, 38%);
+}
+
+.coverage-toggle.is-mandatory {
+  background: hsl(195deg, 80%, 30%);
+  color: white;
+  border-color: deepskyblue;
+  cursor: default;
+}
+
+.coverage-toggle > input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.token-ref {
+  margin-top: 1.5rem;
+  border: 1px solid #3b3d3f;
+  border-radius: 6px;
+  background: hsl(230deg, 5%, 12%);
+}
+
+.token-ref > summary {
+  cursor: pointer;
+  padding: 0.6rem 1rem;
+  font-family: "Syne Mono", monospace;
+  font-size: 0.9rem;
+  color: hsl(230deg, 5%, 75%);
+  list-style: none;
+  user-select: none;
+}
+
+.token-ref > summary::-webkit-details-marker {
+  display: none;
+}
+
+.token-ref > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 8px;
+  transition: transform 0.2s ease;
+  color: hsl(230deg, 5%, 55%);
+}
+
+.token-ref[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.token-ref > summary:hover {
+  color: white;
+}
+
+.token-ref > ul {
+  margin: 0;
+  padding: 0 1.2rem 0.8rem 2.2rem;
+  font-size: 0.9rem;
+  color: hsl(230deg, 5%, 80%);
+  line-height: 1.6;
+}
+
+.token-ref > ul li {
+  margin-bottom: 0.2rem;
+}
+
+.validation {
+  margin-top: 1rem;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-family: "Syne Mono", monospace;
+  font-size: 0.9rem;
+}
+
+.validation:empty {
+  display: none;
+}
+
+.validation.error {
+  background: hsl(32deg, 40%, 12%);
+  border: 1px solid hsl(32deg, 60%, 40%);
+  color: hsl(35deg, 80%, 82%);
+}
+
+.validation.ok {
+  background: hsl(140deg, 30%, 12%);
+  border: 1px solid hsl(140deg, 50%, 30%);
+  color: hsl(140deg, 50%, 80%);
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+  gap: 1.5rem;
+  margin-top: 1rem;
+  align-items: start;
+}
+
+.preview-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+  .preview-column {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+    margin-top: 1rem;
+  }
+}
+
+#previewPanel {
+  padding: 1rem 1.2rem 1.2rem;
+  border: 1px solid #3b3d3f;
+  border-radius: 8px;
+  background: hsl(230deg, 5%, 12%);
+}
+
+.preview-card {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+}
+
+.preview-card h3 {
+  margin-top: 0;
+}
+
+.render-as {
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid hsl(230deg, 5%, 20%);
+}
+
+.render-as > summary {
+  cursor: pointer;
+  padding: 0.3rem 0;
+  font-family: "Syne Mono", monospace;
+  font-size: 0.8rem;
+  color: hsl(230deg, 5%, 60%);
+  list-style: none;
+  user-select: none;
+}
+
+.render-as > summary::-webkit-details-marker {
+  display: none;
+}
+
+.render-as > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 6px;
+  transition: transform 0.2s ease;
+}
+
+.render-as[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.render-as > summary:hover {
+  color: white;
+}
+
+.render-as-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+}
+
+.render-as-body .field > label {
+  font-size: 0.75rem;
+}
+
+.render-as-check {
+  align-self: flex-start;
+}
+
+.perspective-switch {
+  display: flex;
+  margin: 0;
+}
+
+.perspective-switch .mode-btn {
+  flex: 1 1 0;
+  padding: 0.5rem 0.8rem;
+}
+
+.check-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: 1px solid #3b3d3f;
+  background: hsl(230deg, 5%, 18%);
+  color: hsl(230deg, 5%, 90%);
+  font-family: "Syne Mono", monospace;
+  font-size: 1rem;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.check-pill::before {
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-right: 8px;
+  border: 1px solid hsl(230deg, 5%, 55%);
+  border-radius: 3px;
+  background: hsl(230deg, 5%, 12%);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 11px 11px;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.check-pill:has(> input[type="checkbox"]:checked) {
+  background: hsl(195deg, 80%, 30%);
+  color: white;
+  border-color: deepskyblue;
+}
+
+.check-pill:has(> input[type="checkbox"]:checked):hover {
+  background: hsl(195deg, 90%, 38%);
+}
+
+.check-pill:hover:not(:has(> input[type="checkbox"]:checked)) {
+  background: hsl(230deg, 5%, 25%);
+  color: white;
+}
+
+.check-pill:has(> input[type="checkbox"]:checked)::before {
+  background-color: white;
+  border-color: white;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23146e8e' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' d='M3 8l3 3 7-7'/%3E%3C/svg%3E");
+}
+
+.check-pill > input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.preview-card .preview-section {
+  margin-bottom: 0.7rem;
+}
+
+.preview-card .preview-label {
+  font-size: 0.7rem;
+  margin-bottom: 2px;
+}
+
+.preview-card .preview-line {
+  padding: 6px 10px;
+  font-size: 0.9rem;
+}
+
+.preview-section {
+  margin-bottom: 10px;
+}
+
+.preview-label {
+  font-family: "Syne Mono", monospace;
+  font-size: 0.8rem;
+  color: hsl(230deg, 5%, 55%);
+  margin-bottom: 3px;
+}
+
+.preview-line {
+  background: #111;
+  border: 1px solid #2b2d2f;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-family: Quicksand, sans-serif;
+  color: hsl(230deg, 5%, 88%);
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-height: 1.4rem;
+}
+
+.preview-line:empty::before {
+  content: "...";
+  color: hsl(230deg, 5%, 40%);
+}
+
+.preview-line .token-bad {
+  color: hsl(0deg, 70%, 65%);
+  background: hsl(0deg, 50%, 18%);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.preview-line .verb {
+  color: hsl(48deg, 80%, 75%);
+}
+
+.preview-line .pronoun {
+  color: hsl(195deg, 70%, 70%);
+}
+
+.preview-line .name-token {
+  color: hsl(280deg, 60%, 80%);
+}
+
+.preview-line .wearer-token {
+  color: hsl(140deg, 55%, 72%);
+}
+
+.preview-line .target-token {
+  color: hsl(20deg, 75%, 72%);
+}
+
+.preview-line .color-token {
+  font-weight: 500;
+}
+
+.output-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+#designPanel h3:first-of-type {
+  margin-top: 0.5rem;
+}
+
+code {
+  background: hsl(230deg, 5%, 22%);
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-family: "Syne Mono", monospace;
+  font-size: 0.9em;
 }

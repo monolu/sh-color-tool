@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SH Clothing Tool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-clothing">
+
+<header class="site-header">
+  <div class="site-brand">sh tools</div>
+  <nav class="site-nav" aria-label="Tools">
+    <a href="index.html" class="nav-link">Color</a>
+    <a href="clothing.html" class="nav-link active" aria-current="page">Clothing</a>
+  </nav>
+</header>
+
+<div class="card">
+  <div class="card-header">
+    <h1>Clothing Tool</h1>
+  </div>
+
+  <div class="workspace">
+    <section class="design-card">
+      <div class="field-grid">
+        <div class="field">
+          <label for="categoryPicker">Category</label>
+          <select id="categoryPicker"></select>
+        </div>
+        <div class="field">
+          <label for="itemPicker">Item</label>
+          <select id="itemPicker"></select>
+        </div>
+      </div>
+
+      <div id="designPanel" hidden>
+        <div class="field-grid">
+          <div class="field">
+            <div class="field-header">
+              <label for="prefix">Prefix</label>
+              <span class="char-count" data-for="prefix">0/30</span>
+            </div>
+            <input id="prefix" type="text" placeholder="e.g. a cotton">
+          </div>
+          <div class="field">
+            <div class="field-header">
+              <label for="suffix">Suffix</label>
+              <span class="char-count" data-for="suffix">0/30</span>
+            </div>
+            <input id="suffix" type="text" placeholder="e.g. with a large button">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="colorCurrent">Color</label>
+          <button type="button" id="colorCurrent" class="color-current" aria-expanded="false" aria-controls="colorGrid">
+            <span class="color-swatch" id="colorCurrentSwatch"></span>
+            <span id="colorCurrentNum" class="color-num"></span>
+            <span id="colorCurrentName">(pick a color)</span>
+            <span class="change-text" aria-hidden="true">Click to change</span>
+          </button>
+          <div id="colorGrid" class="color-grid is-hidden"></div>
+        </div>
+
+        <div id="coverageBlock" class="field" hidden>
+          <label>Coverage</label>
+          <div id="coverageList" class="coverage-list"></div>
+        </div>
+
+        <div class="field">
+          <div class="field-header">
+            <label for="unwornDesc">Unworn description</label>
+            <span class="char-count" data-for="unwornDesc">0</span>
+          </div>
+          <textarea id="unwornDesc" rows="3" placeholder="This %m is a long stretch of %c cotton fabric with two lengthy strips of cloth..."></textarea>
+        </div>
+        <div class="field">
+          <div class="field-header">
+            <label for="wornDesc">Worn description</label>
+            <span class="char-count" data-for="wornDesc">0</span>
+          </div>
+          <textarea id="wornDesc" rows="3" placeholder="%N is wearing %m, which drapes over %p body..."></textarea>
+        </div>
+
+        <div class="field">
+          <div class="field-header">
+            <label for="wearEmote">Wear emote</label>
+            <span class="char-count" data-for="wearEmote">0</span>
+          </div>
+          <textarea id="wearEmote" rows="2" placeholder="%N <wear> %p %m."></textarea>
+        </div>
+        <div class="field">
+          <div class="field-header">
+            <label for="removeEmote">Remove emote</label>
+            <span class="char-count" data-for="removeEmote">0</span>
+          </div>
+          <textarea id="removeEmote" rows="2" placeholder="%N <remove> %p %m."></textarea>
+        </div>
+        <div class="field">
+          <div class="field-header">
+            <label for="teaseEmote">Tease emote</label>
+            <span class="char-count" data-for="teaseEmote">0</span>
+          </div>
+          <textarea id="teaseEmote" rows="2" placeholder="%N <brush> some dust off %p %m, then <smile> @ contentedly."></textarea>
+        </div>
+
+        <details class="token-ref">
+          <summary>Reference</summary>
+          <ul>
+            <li><code>%c</code> - selected color name</li>
+            <li><code>%m</code> - item name with article stripped</li>
+            <li><code>%n</code> - wearer name</li>
+            <li><code>%s</code> - subject: she / he / they</li>
+            <li><code>%p</code> - possessive: her / his / their</li>
+            <li><code>%t</code> - possessive noun: hers / his / theirs</li>
+            <li><code>%o</code> - oblique: her / him / them</li>
+            <li><code>%r</code> - reflexive: herself / himself / themself</li>
+            <li><code>&lt;verb&gt;</code> - conjugated verb, write in I-form, e.g. <code>&lt;wear&gt;</code> -> "wears"</li>
+            <li><code>@</code> - "at &lt;character&gt;" when directed at another character</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <div class="preview-column">
+      <aside id="previewPanel" class="preview-card" hidden>
+        <h3>Preview</h3>
+
+        <div class="preview-section">
+          <div class="preview-label">Name</div>
+          <div id="previewName" class="preview-line"></div>
+        </div>
+
+        <div class="preview-section">
+          <div class="preview-label">Unworn</div>
+          <div id="previewUnworn" class="preview-line"></div>
+        </div>
+
+        <div class="preview-section">
+          <div class="preview-label">Worn</div>
+          <div id="previewWorn" class="preview-line"></div>
+        </div>
+
+        <div class="preview-section">
+          <div class="preview-label">Wear</div>
+          <div id="previewWear" class="preview-line"></div>
+        </div>
+
+        <div class="preview-section">
+          <div class="preview-label">Remove</div>
+          <div id="previewRemove" class="preview-line"></div>
+        </div>
+
+        <div class="preview-section">
+          <div class="preview-label">Tease</div>
+          <div id="previewTease" class="preview-line"></div>
+        </div>
+
+        <details class="render-as">
+          <summary>Display Settings</summary>
+          <div class="render-as-body">
+            <div class="field">
+              <div class="mode-switch perspective-switch" role="radiogroup" aria-label="Perspective">
+                <button type="button" class="mode-btn active" data-perspective="third" aria-pressed="true">3rd person</button>
+                <button type="button" class="mode-btn" data-perspective="first" aria-pressed="false">1st person</button>
+              </div>
+            </div>
+            <div class="field">
+              <input id="wearerName" type="text" placeholder="Primrose">
+            </div>
+            <div class="field">
+              <select id="wearerPronouns">
+                <option value="she" selected>she / her</option>
+                <option value="he">he / him</option>
+                <option value="they">they / them</option>
+              </select>
+            </div>
+            <label class="check-pill render-as-check">
+              <input type="checkbox" id="teaseTargetEnabled">
+              Tease @ Character
+            </label>
+          </div>
+        </details>
+      </aside>
+      <div id="validation" class="validation"></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="clothing.js"></script>
+</body>
+</html>

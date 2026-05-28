@@ -1326,7 +1326,7 @@ function flashHint(msg) {
     el.style.cssText =
       "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);" +
       "background:hsl(230deg,5%,12%);color:hsl(230deg,5%,90%);padding:10px 18px;" +
-      "border:1px solid #3b3d3f;border-radius:8px;letter-spacing:0.05em;" +
+      "border:1px solid #3b3d3f;border-radius:8px;letter-spacing:0.1em;" +
       "z-index:9999;box-shadow:0 4px 15px rgba(0,0,0,0.5);";
     document.body.appendChild(el);
   }
